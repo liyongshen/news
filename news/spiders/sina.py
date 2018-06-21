@@ -28,12 +28,13 @@ class SinaSpider(scrapy.Spider):
 
             self.i += 1
             new_url = self.base_url.format(self.i)
-
+            # 必须添加referer为none，否则返回403
             yield scrapy.Request(new_url,callback=self.parse,headers={"referer": "None"})
 
     def parse_content(self,response):
 
         item = response.meta["item"]
         item["time"]=response.xpath('//div[@class = "date-source"]/span[1]/text()').extract_first()
+        # 返回列表
         item["content"] = response.xpath('//div[@id = "artibody"]/p').xpath("string(.)").extract()
         yield item

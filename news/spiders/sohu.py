@@ -14,7 +14,7 @@ class SinaSpider(scrapy.Spider):
 
     def parse(self, response):
         data_list = json.loads(response.body.decode())
-        print(data_list)
+        # 因为很多新闻的链接都是其他网站的，html格式不一致，所有在这里就不爬取各个新闻的内容了
         if data_list:
             for data in data_list:
                 item = SohuItem()
